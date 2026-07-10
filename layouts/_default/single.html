@@ -1,0 +1,13 @@
+{{ define "main" }}
+<article class="post">
+  <p class="back-link"><a href="#" onclick="history.back(); return false;">← geri</a></p>
+  <div class="meta-line">{{ .Date.Format "02.01.2006" }}</div>
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  {{ if .Params.tags }}
+  <div class="tags">
+    {{ range .Params.tags }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}
+  </div>
+  {{ end }}
+</article>
+{{ end }}

@@ -1,0 +1,28 @@
+{{ define "main" }}
+<div class="filter-bar">
+  etiket: <span class="chip">#{{ .Data.Term }}<a href="{{ "/" | absURL }}" title="filtreyi kaldır">×</a></span>
+</div>
+<div class="feed">
+  {{ range .Pages.ByDate.Reverse }}
+  <article class="entry">
+    <div class="meta-line">{{ .Date.Format "02.01.2006" }}</div>
+    <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    {{ $manual := .Params.summary }}
+    {{ $summary := $manual | default .Summary }}
+    {{ $summaryPlain := $summary | plainify }}
+    {{ $fullWords := countwords .Plain }}
+    {{ $summaryWords := countwords $summaryPlain }}
+    {{ $charTruncated := gt (len $summaryPlain) 160 }}
+    {{ $hasImage := gt (len (.Resources.ByType "image")) 0 }}
+    {{ $hasMore := or (gt $fullWords $summaryWords) $charTruncated $hasImage }}
+    {{ if $summary }}<p class="preview">{{ $summaryPlain | truncate 160 }}</p>{{ end }}
+    {{ if $hasMore }}<p class="read-more"><a href="{{ .RelPermalink }}">devamını oku →</a></p>{{ end }}
+    {{ if .Params.tags }}
+    <div class="tags">
+      {{ range .Params.tags }}<a href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>{{ end }}
+    </div>
+    {{ end }}
+  </article>
+  {{ end }}
+</div>
+{{ end }}

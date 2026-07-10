@@ -1,0 +1,21 @@
+baseURL = "https://doppler43.github.io/"
+languageCode = "tr"
+title = "doppler43"
+paginate = 40
+
+[taxonomies]
+  tag = "tags"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+    [markup.goldmark.extensions]
+      [markup.goldmark.extensions.passthrough]
+        enable = true
+        [markup.goldmark.extensions.passthrough.delimiters]
+          inline = [['\(', '\)'], ['$', '$']]
+          block = [['\[', '\]'], ['$$', '$$']]
+  [markup.highlight]
+    style = "monokai"
+    noClasses = false
